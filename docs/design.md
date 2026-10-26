@@ -132,3 +132,7 @@ El usuario solicitó que estos dos enlaces abran una pestaña nueva para conserv
 la web personal abierta. Se implementa mediante enlaces nativos, sin JavaScript,
 con protección `noopener noreferrer`, indicación visual discreta y descripción
 accesible del cambio de pestaña. No se altera el comportamiento de otros enlaces.
+
+Extensión solicitada posteriormente: los dos enlaces al perfil de GitHub también
+abren pestañas nuevas con las mismas protecciones y señales. La navegación interna
+y el enlace de correo conservan su comportamiento nativo.

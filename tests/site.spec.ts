@@ -56,18 +56,24 @@ test('offers the public GitHub profile and institutional email', async ({ page }
     .toHaveAttribute('href', 'mailto:velez.kevin@correounivalle.edu.co');
 });
 
-test('opens each PDF in a separate protected tab and preserves the website without JavaScript', async ({ browser }) => {
+test('opens PDFs and both GitHub profile links in protected tabs while preserving the website', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   // Stub only GitHub's external response: exercise the real anchor and browser
   // popup behavior without making the suite depend on GitHub rendering or uptime.
-  await context.route('https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/**', (route) =>
+  await context.route(/^https:\/\/github\.com\/KevinVelezE(?:\/.*)?$/, (route) =>
     route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>Document destination</title>' }),
   );
   const page = await context.newPage();
   await page.goto(`${siteOrigin}${entryPath}`);
   const originalUrl = page.url();
-  for (const [label, filename] of [['Read thesis (PDF)', 'tesis.pdf'], ['Read abstract (PDF)', 'mapi4-abstract.pdf']]) {
-    const link = page.getByRole('link', { name: label, exact: true });
+  for (const [region, label, destination] of [
+    ['.introduction-links', 'GitHub', 'https://github.com/KevinVelezE'],
+    ['#mathematical-work', 'Read thesis (PDF)', 'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/tesis.pdf'],
+    ['#mathematical-work', 'Read abstract (PDF)', 'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/mapi4-abstract.pdf'],
+    ['#contact', 'GitHub', 'https://github.com/KevinVelezE'],
+  ]) {
+    const link = page.locator(region).getByRole('link', { name: label, exact: true });
+    await expect(link).toHaveAttribute('href', destination);
     await expect(link).toHaveAttribute('target', '_blank');
     await expect(link).toHaveAttribute('rel', /\bnoopener\b/);
     await expect(link).toHaveAttribute('rel', /\bnoreferrer\b/);
@@ -75,12 +81,13 @@ test('opens each PDF in a separate protected tab and preserves the website witho
     const popupPromise = context.waitForEvent('page');
     await link.click();
     const popup = await popupPromise;
-    await popup.waitForURL(`https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/${filename}`);
+    await popup.waitForURL(destination);
     expect(await popup.evaluate(() => window.opener)).toBeNull();
     await expect(page).toHaveURL(originalUrl);
     await expect(page.getByRole('heading', { name: 'Kevin Vélez Escarria', exact: true })).toBeVisible();
     await popup.close();
   }
+  await expect(page.locator('a[href^="#"][target="_blank"], a[href^="mailto:"][target="_blank"]')).toHaveCount(0);
   await context.close();
 });
 

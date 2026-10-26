@@ -143,3 +143,18 @@ to avoid external rendering/network dependencies; browser navigation is real.
 14/14 pass, including accessibility and mobile checks. Kevin explicitly approved
 committing and publishing this follow-up. The deployment workflow repeats the
 checks before publication; see the Actions history for its remote result.
+
+## GitHub profile links in new tabs — local follow-up
+
+The user also requested the same behavior for both GitHub profile links, in the
+introduction and Contact section. Their anchors lacked the target/rel/title
+settings applied to the PDFs. The extended regression failed on the introduction
+link before the fix, then exercised all four external links in real browser tabs
+with external HTML responses stubbed. Each tab has no opener, the original page
+remains open, and internal navigation/mailto links retain their original behavior.
+
+Both profile links now have the same protection, accessible description and small
+visual marker as the document links. `npm run check`: zero diagnostics.
+Production-configured full suite: 14/14 pass. Kevin explicitly authorized the
+commit and production deployment; the workflow repeats these checks before
+publishing the update.

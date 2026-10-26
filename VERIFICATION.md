@@ -126,3 +126,20 @@ The existing public-material allowlist was updated to the viewer URLs.
 npm run test:e2e`: 13/13 pass, including mobile, keyboard and axe checks. The
 suite rebuilds the production output. No new materials, services or permissions
 were added; document language remains internal metadata only.
+
+## Document links in new tabs — local verification
+
+The two document links now use native `target="_blank"` with
+`rel="noopener noreferrer"`, a small external-link marker, and an accessible
+description via `title="Opens in a new tab"`. Other links are unchanged.
+
+The new regression test failed on the missing target before implementation. It
+then clicked both actual anchors in a JavaScript-disabled browser, verified
+separate document tabs with no opener access, and confirmed the original page
+remains open at its original URL. Only GitHub's remote HTML response is stubbed
+to avoid external rendering/network dependencies; browser navigation is real.
+
+`npm run check`: zero diagnostics. Production-configured `npm run test:e2e`:
+14/14 pass, including accessibility and mobile checks. Kevin explicitly approved
+committing and publishing this follow-up. The deployment workflow repeats the
+checks before publication; see the Actions history for its remote result.

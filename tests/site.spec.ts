@@ -56,6 +56,34 @@ test('offers the public GitHub profile and institutional email', async ({ page }
     .toHaveAttribute('href', 'mailto:velez.kevin@correounivalle.edu.co');
 });
 
+test('opens each PDF in a separate protected tab and preserves the website without JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  // Stub only GitHub's external response: exercise the real anchor and browser
+  // popup behavior without making the suite depend on GitHub rendering or uptime.
+  await context.route('https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/**', (route) =>
+    route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>Document destination</title>' }),
+  );
+  const page = await context.newPage();
+  await page.goto(`${siteOrigin}${entryPath}`);
+  const originalUrl = page.url();
+  for (const [label, filename] of [['Read thesis (PDF)', 'tesis.pdf'], ['Read abstract (PDF)', 'mapi4-abstract.pdf']]) {
+    const link = page.getByRole('link', { name: label, exact: true });
+    await expect(link).toHaveAttribute('target', '_blank');
+    await expect(link).toHaveAttribute('rel', /\bnoopener\b/);
+    await expect(link).toHaveAttribute('rel', /\bnoreferrer\b/);
+    await expect(link).toHaveAccessibleDescription('Opens in a new tab');
+    const popupPromise = context.waitForEvent('page');
+    await link.click();
+    const popup = await popupPromise;
+    await popup.waitForURL(`https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/${filename}`);
+    expect(await popup.evaluate(() => window.opener)).toBeNull();
+    await expect(page).toHaveURL(originalUrl);
+    await expect(page.getByRole('heading', { name: 'Kevin Vélez Escarria', exact: true })).toBeVisible();
+    await popup.close();
+  }
+  await context.close();
+});
+
 test('keeps content and navigation available without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();

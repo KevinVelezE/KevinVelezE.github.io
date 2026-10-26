@@ -16,9 +16,10 @@ import { selectedWorks } from '../data/profile';
         <h3>{work.title}</h3>
         <p class="work-authors">{work.authors.join(' and ')}</p>
         <p>{work.description}</p>
-        {work.pdfUrl && <a class="document-link" href={work.pdfUrl}>
+        {work.pdfUrl && <a class="document-link" href={work.pdfUrl} target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
           {work.kind === 'Undergraduate thesis' ? 'Read thesis' : 'Read abstract'}
           <span class="link-detail"> (PDF)</span>
+          <span aria-hidden="true"> ↗</span>
         </a>}
       </div>
     </article>

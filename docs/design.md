@@ -127,3 +127,8 @@ GitHub (`/blob/main/papers/...`) en lugar de sus descargas `raw`. Los enlaces
 visibles son «Read thesis (PDF)» y «Read abstract (PDF)». No se muestra el idioma
 del documento ni «hosted on GitHub», ni en las fichas ni en los enlaces. La
 clasificación académica, los autores y el contenido de los trabajos se conservan.
+
+El usuario solicitó que estos dos enlaces abran una pestaña nueva para conservar
+la web personal abierta. Se implementa mediante enlaces nativos, sin JavaScript,
+con protección `noopener noreferrer`, indicación visual discreta y descripción
+accesible del cambio de pestaña. No se altera el comportamiento de otros enlaces.

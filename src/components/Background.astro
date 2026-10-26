@@ -1,0 +1,18 @@
+---
+import { profile } from '../data/profile';
+---
+<section class="background-section" id="background" aria-labelledby="background-heading">
+  <div class="wrapper background-layout">
+    <div>
+      <h2 id="background-heading">Background</h2>
+      <p class="section-description">Mathematics, electronics and software practice.</p>
+    </div>
+    <div class="background-copy">
+      <h3>Education</h3>
+      <ul class="education-list">{profile.background.map((item) => <li>{item}</li>)}</ul>
+      <h3>Computational practice</h3>
+      <p>My thesis brought together Python simulations of projections, Fourier-domain filtering and image reconstruction, with reproducible experiments to compare filters under noise.</p>
+      <p>Alongside mathematics, I develop Python backend services. I am interested in bringing this experience to reproducible mathematical software and accessible computational tools.</p>
+    </div>
+  </div>
+</section>

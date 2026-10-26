@@ -1,0 +1,22 @@
+---
+import Page from '../layouts/Page.astro';
+import Header from '../components/Header.astro';
+import Introduction from '../components/Introduction.astro';
+import MathematicalWork from '../components/MathematicalWork.astro';
+import Background from '../components/Background.astro';
+import Contact from '../components/Contact.astro';
+import { profile } from '../data/profile';
+---
+<Page>
+  <Header />
+  <main id="main-content" tabindex="-1">
+    <Introduction />
+    <MathematicalWork />
+    <Background />
+    <Contact />
+  </main>
+  <footer class="site-footer wrapper">
+    <span translate="no">{profile.name}</span>
+    <span>Colombia</span>
+  </footer>
+</Page>

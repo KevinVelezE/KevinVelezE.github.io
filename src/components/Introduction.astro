@@ -1,0 +1,17 @@
+---
+import { profile } from '../data/profile';
+import ProjectionDiagram from './ProjectionDiagram.astro';
+---
+<section class="introduction wrapper" aria-labelledby="profile-name">
+  <div class="introduction-copy">
+    <h1 id="profile-name" translate="no">{profile.name}</h1>
+    <p class="statement">Mathematics, through a computational lens.</p>
+    <p class="introduction-text">{profile.introduction}</p>
+    <p class="introduction-note">From mathematical reasoning to numerical experiments and reproducible software.</p>
+    <div class="introduction-links">
+      <a href="#mathematical-work">Explore my work</a>
+      <a href={profile.githubUrl}>GitHub</a>
+    </div>
+  </div>
+  <ProjectionDiagram />
+</section>

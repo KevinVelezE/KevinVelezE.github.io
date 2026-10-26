@@ -1,0 +1,13 @@
+---
+import { profile } from '../data/profile';
+---
+<section class="contact-section wrapper" id="contact" aria-labelledby="contact-heading">
+  <div>
+    <h2 id="contact-heading">Contact</h2>
+    <p>Let’s talk mathematics and computation.</p>
+  </div>
+  <div class="contact-links">
+    <a href={`mailto:${profile.email}`}>{profile.email}</a>
+    <a href={profile.githubUrl}>GitHub</a>
+  </div>
+</section>

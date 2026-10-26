@@ -31,7 +31,7 @@ export const selectedWorks: SelectedWork[] = [
     description: 'A theoretical and computational study of two-dimensional reconstruction through the Radon transform and filtered backprojection, including numerical experiments on reconstruction filters and sensitivity to noise. Supervised by Julio Delgado.',
     authors: ['Kevin Vélez Escarria'],
     language: 'Spanish',
-    pdfUrl: 'https://github.com/KevinVelezE/KevinVelezE/raw/refs/heads/main/papers/tesis.pdf',
+    pdfUrl: 'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/tesis.pdf',
   },
   {
     title: 'Filter Functions for Reconstruction Algorithms',
@@ -39,6 +39,6 @@ export const selectedWorks: SelectedWork[] = [
     description: 'Fourier multiplier symbols and their role in reconstruction algorithms, supported by numerical simulations and scientific figures prepared for a presentation at the Fourth Colombian Conference on Applied and Industrial Mathematics (MAPI 4), Icesi University, Cali, Colombia, June 2–5, 2026.',
     authors: ['Kevin Velez', 'Juan Lopez'],
     language: 'English',
-    pdfUrl: 'https://github.com/KevinVelezE/KevinVelezE/raw/refs/heads/main/papers/mapi4-abstract.pdf',
+    pdfUrl: 'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/mapi4-abstract.pdf',
   },
 ];

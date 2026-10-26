@@ -112,3 +112,17 @@ build output, screenshots, `.env` files and assistant scratch files are excluded
 The commit uses GitHub's account-specific noreply address rather than a personal
 email address. The workflow publishes `dist/`, not the source tree or documentation.
 No paid service, domain purchase or custom token is needed.
+
+## Document-link refinement
+
+Kevin approved replacing direct PDF downloads with GitHub file-viewer pages and
+removing visible language/hosting details. Both `/blob/main/papers/...` destinations
+responded HTTP 200 with HTML content. A new browser regression test checks the
+concise labels, viewer URLs, absence of forced-download links and absence of the
+removed details. It failed against the old version and passed after the change.
+The existing public-material allowlist was updated to the viewer URLs.
+
+`npm run check`: 0 errors/warnings/hints. `SITE_URL=https://kevinveleze.github.io
+npm run test:e2e`: 13/13 pass, including mobile, keyboard and axe checks. The
+suite rebuilds the production output. No new materials, services or permissions
+were added; document language remains internal metadata only.

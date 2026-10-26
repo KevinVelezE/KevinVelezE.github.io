@@ -63,7 +63,8 @@ build for an ordinary preview.
 - `docs/design.md`: approved scope, choices, constraints and acceptance criteria.
 - `VERIFICATION.md`: verification results and remaining approvals.
 
-Document links point to the two already-public PDFs in the GitHub profile. No
+Document links open GitHub's file-viewer pages for the two already-public PDFs
+in the GitHub profile, rather than triggering direct downloads. No
 local thesis, conference document or CV has been copied. No private research or
 company code/data is included. The CV and a Software section are intentionally
 absent until their contents are ready and approved. The tomography explorer is

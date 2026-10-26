@@ -119,3 +119,11 @@ como resultados y no duplicar MAPI 4.
 
 Pendiente: materiales descargables finales, inicialización de Git, repositorio
 remoto, commits y despliegue. No bloquean la construcción local.
+
+## Ajuste posterior aprobado: enlaces de documentos
+
+Tras revisar la versión publicada, Kevin pidió abrir las páginas de los PDF en
+GitHub (`/blob/main/papers/...`) en lugar de sus descargas `raw`. Los enlaces
+visibles son «Read thesis (PDF)» y «Read abstract (PDF)». No se muestra el idioma
+del documento ni «hosted on GitHub», ni en las fichas ni en los enlaces. La
+clasificación académica, los autores y el contenido de los trabajos se conservan.

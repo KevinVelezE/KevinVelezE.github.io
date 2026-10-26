@@ -11,7 +11,6 @@ import { selectedWorks } from '../data/profile';
       <div class="work-meta">
         <p class="work-kind">{work.kind}</p>
         <p>{work.kind === 'Undergraduate thesis' ? 'Universidad del Valle' : 'MAPI 4 · 2026'}</p>
-        <p>{work.language}</p>
       </div>
       <div class="work-body">
         <h3>{work.title}</h3>
@@ -19,7 +18,7 @@ import { selectedWorks } from '../data/profile';
         <p>{work.description}</p>
         {work.pdfUrl && <a class="document-link" href={work.pdfUrl}>
           {work.kind === 'Undergraduate thesis' ? 'Read thesis' : 'Read abstract'}
-          <span class="link-detail"> (PDF, {work.language}; hosted on GitHub)</span>
+          <span class="link-detail"> (PDF)</span>
         </a>}
       </div>
     </article>

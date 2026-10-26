@@ -29,14 +29,23 @@ test('distinguishes the thesis from the coauthored MAPI extended abstract', asyn
   const works = page.locator('#mathematical-work article');
   await expect(works).toHaveCount(2);
   const thesis = works.filter({ hasText: 'Undergraduate thesis' });
-  await expect(thesis).toContainText('Spanish');
   await expect(thesis).toContainText('Julio Delgado');
   const abstract = works.filter({ hasText: 'Extended abstract' });
   await expect(abstract).toContainText('Juan Lopez');
   await expect(abstract).toContainText('MAPI 4');
-  await expect(abstract).toContainText('English');
   await expect(page.getByRole('heading', { name: /publications|software/i })).toHaveCount(0);
   await expect(page.getByRole('link', { name: /\bCV\b|coming soon|tomography explorer/i })).toHaveCount(0);
+});
+
+test('opens document pages on GitHub with concise labels and no language or hosting badges', async ({ page }) => {
+  await page.goto(entryPath);
+  const works = page.locator('#mathematical-work');
+  const thesis = works.getByRole('link', { name: 'Read thesis (PDF)', exact: true });
+  const abstract = works.getByRole('link', { name: 'Read abstract (PDF)', exact: true });
+  await expect(thesis).toHaveAttribute('href', 'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/tesis.pdf');
+  await expect(abstract).toHaveAttribute('href', 'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/mapi4-abstract.pdf');
+  await expect(works.locator('a[download], a[href*="/raw/"]')).toHaveCount(0);
+  await expect(works).not.toContainText(/hosted on GitHub|\bSpanish\b|\bEnglish\b/i);
 });
 
 test('offers the public GitHub profile and institutional email', async ({ page }) => {
@@ -85,8 +94,8 @@ test('links only to selected public materials and does not serve a local CV', as
   );
   expect(externalLinks).toEqual([
     'https://github.com/KevinVelezE',
-    'https://github.com/KevinVelezE/KevinVelezE/raw/refs/heads/main/papers/mapi4-abstract.pdf',
-    'https://github.com/KevinVelezE/KevinVelezE/raw/refs/heads/main/papers/tesis.pdf',
+    'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/mapi4-abstract.pdf',
+    'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/tesis.pdf',
     'mailto:velez.kevin@correounivalle.edu.co',
   ]);
   expect((await request.get(`${entryPath}cv.pdf`)).status()).toBe(404);

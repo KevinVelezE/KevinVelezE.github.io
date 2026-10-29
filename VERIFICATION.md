@@ -158,3 +158,34 @@ visual marker as the document links. `npm run check`: zero diagnostics.
 Production-configured full suite: 14/14 pass. Kevin explicitly authorized the
 commit and production deployment; the workflow repeats these checks before
 publishing the update.
+
+## Interactive tomography companion — 2026-10-28
+
+Kevin approved the proposed small companion block under the thesis, with the
+description and links “Explore the demo” / “View source”. It remains subordinate
+to the thesis, not a third publication or a new menu section. No application is
+embedded; the abstract, author credits, PDFs and contact details are unchanged.
+
+Before implementation, three browser checks failed on the missing companion,
+missing popup link and newly approved public-link destinations. After the change:
+- `npm run check`: zero errors/warnings/hints.
+- `SITE_URL=https://kevinveleze.github.io BASE_PATH=/ npm run test:e2e`: 15/15 pass.
+- `BASE_PATH=/preview/ SITE_URL=https://example.org npm run test:e2e`: 15/15 pass.
+- Restored root production build: succeeds.
+- Existing axe, keyboard, no-JavaScript, 200%-text and 320/390/1440 reflow checks
+  pass. Desktop/mobile captures were opened and inspected.
+- New links use protected native tabs and the site's existing external-link
+  marker/description. The popup regression stubs only external destination HTML;
+  a separate real-network browser click opened the actual published explorer,
+  reached a completed worker calculation and left the original local page open,
+  with null window.opener. Both public destinations responded HTTP 200.
+- `git diff --check`: clean. No new dependencies or changes to the explorer repo.
+
+On 2026-10-29, Kevin explicitly approved the commit, push and production deployment
+of this follow-up. Before publication, Astro/TypeScript again reported zero
+diagnostics and the production-configured full browser suite passed 15/15. A
+server restart interrupted one test invocation; its orphaned test preview was
+identified and stopped, and the interrupted suite was rerun successfully.
+The existing Pages workflow repeats verification before deployment; its outcome
+is available in the Actions history. No delegated reviewer or new physical-device
+or browser-engine coverage is implied.

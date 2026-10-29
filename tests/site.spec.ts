@@ -48,6 +48,20 @@ test('opens document pages on GitHub with concise labels and no language or host
   await expect(works).not.toContainText(/hosted on GitHub|\bSpanish\b|\bEnglish\b/i);
 });
 
+test('connects the thesis to its interactive explorer without creating another publication entry', async ({ page }) => {
+  await page.goto(entryPath);
+  const thesis = page.locator('#mathematical-work article').filter({ hasText: 'Undergraduate thesis' });
+  const explorer = thesis.getByRole('region', { name: 'Interactive tomography explorer', exact: true });
+  await expect(explorer.getByRole('heading', { name: 'Interactive tomography explorer', exact: true })).toBeVisible();
+  await expect(explorer).toContainText('Explore projections, filtered backprojection, and the tradeoff between detail and noise through reproducible browser experiments.');
+  await expect(explorer.getByRole('link', { name: 'Explore the demo', exact: true })).toHaveAttribute('href', 'https://kevinveleze.github.io/tomography-explorer/');
+  await expect(explorer.getByRole('link', { name: 'View source', exact: true })).toHaveAttribute('href', 'https://github.com/KevinVelezE/tomography-explorer');
+  const thesisLink = await thesis.getByRole('link', { name: 'Read thesis (PDF)', exact: true }).boundingBox();
+  const companion = await explorer.boundingBox();
+  expect(companion!.y).toBeGreaterThanOrEqual(thesisLink!.y + thesisLink!.height);
+  await expect(page.locator('#mathematical-work article')).toHaveCount(2);
+});
+
 test('offers the public GitHub profile and institutional email', async ({ page }) => {
   await page.goto(entryPath);
   const contact = page.locator('#contact');
@@ -56,12 +70,15 @@ test('offers the public GitHub profile and institutional email', async ({ page }
     .toHaveAttribute('href', 'mailto:velez.kevin@correounivalle.edu.co');
 });
 
-test('opens PDFs and both GitHub profile links in protected tabs while preserving the website', async ({ browser }) => {
+test('opens documents, profiles and explorer links in protected tabs while preserving the website', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   // Stub only GitHub's external response: exercise the real anchor and browser
   // popup behavior without making the suite depend on GitHub rendering or uptime.
   await context.route(/^https:\/\/github\.com\/KevinVelezE(?:\/.*)?$/, (route) =>
     route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>Document destination</title>' }),
+  );
+  await context.route('https://kevinveleze.github.io/tomography-explorer/', (route) =>
+    route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>Explorer destination</title>' }),
   );
   const page = await context.newPage();
   await page.goto(`${siteOrigin}${entryPath}`);
@@ -69,6 +86,8 @@ test('opens PDFs and both GitHub profile links in protected tabs while preservin
   for (const [region, label, destination] of [
     ['.introduction-links', 'GitHub', 'https://github.com/KevinVelezE'],
     ['#mathematical-work', 'Read thesis (PDF)', 'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/tesis.pdf'],
+    ['#mathematical-work', 'Explore the demo', 'https://kevinveleze.github.io/tomography-explorer/'],
+    ['#mathematical-work', 'View source', 'https://github.com/KevinVelezE/tomography-explorer'],
     ['#mathematical-work', 'Read abstract (PDF)', 'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/mapi4-abstract.pdf'],
     ['#contact', 'GitHub', 'https://github.com/KevinVelezE'],
   ]) {
@@ -131,6 +150,8 @@ test('links only to selected public materials and does not serve a local CV', as
     'https://github.com/KevinVelezE',
     'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/mapi4-abstract.pdf',
     'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/tesis.pdf',
+    'https://github.com/KevinVelezE/tomography-explorer',
+    'https://kevinveleze.github.io/tomography-explorer/',
     'mailto:velez.kevin@correounivalle.edu.co',
   ]);
   expect((await request.get(`${entryPath}cv.pdf`)).status()).toBe(404);

@@ -22,6 +22,12 @@ type SelectedWork = {
   authors: string[];
   language: 'English' | 'Spanish';
   pdfUrl?: string;
+  explorer?: {
+    title: string;
+    description: string;
+    demoUrl: string;
+    sourceUrl: string;
+  };
 };
 
 export const selectedWorks: SelectedWork[] = [
@@ -32,6 +38,12 @@ export const selectedWorks: SelectedWork[] = [
     authors: ['Kevin Vélez Escarria'],
     language: 'Spanish',
     pdfUrl: 'https://github.com/KevinVelezE/KevinVelezE/blob/main/papers/tesis.pdf',
+    explorer: {
+      title: 'Interactive tomography explorer',
+      description: 'Explore projections, filtered backprojection, and the tradeoff between detail and noise through reproducible browser experiments.',
+      demoUrl: 'https://kevinveleze.github.io/tomography-explorer/',
+      sourceUrl: 'https://github.com/KevinVelezE/tomography-explorer',
+    },
   },
   {
     title: 'Filter Functions for Reconstruction Algorithms',

@@ -136,3 +136,21 @@ accesible del cambio de pestaña. No se altera el comportamiento de otros enlace
 Extensión solicitada posteriormente: los dos enlaces al perfil de GitHub también
 abren pestañas nuevas con las mismas protecciones y señales. La navegación interna
 y el enlace de correo conservan su comportamiento nativo.
+
+## Ajuste aprobado: enlace al explorador (2026-10-28)
+
+El usuario aprobó un bloque complementario bajo la tesis en Mathematical work:
+«Interactive tomography explorer», descripción breve de los experimentos
+reproducibles y enlaces «Explore the demo» / «View source» al proyecto público.
+No crear otra publicación académica, sección de software ni entrada de menú;
+no incrustar la aplicación. Se conserva la tesis como trabajo principal y la
+paleta/tipografía editorial existente, con un bloque subordinado y discreto.
+
+Ambos enlaces siguen el patrón de pestaña nueva protegida, con indicación visual
+y descripción accesible, sin JavaScript. Los datos pertenecen a la tesis, no al
+abstract coautorado. Conservar dos entradas de trabajos y sus documentos/autores.
+Verificar destinos, apertura protegida, ausencia de cargas externas al leer la
+web, teclado, axe y reflow a 320/390/1440 px y texto al 200%. La nota técnica,
+contacto con revisores y estrategia de perfil no se ejecutan como parte de este
+cambio acotado. Kevin confirmó explícitamente commit/push y despliegue de este
+ajuste el 2026-10-29.

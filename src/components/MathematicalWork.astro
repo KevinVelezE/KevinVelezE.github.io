@@ -21,6 +21,18 @@ import { selectedWorks } from '../data/profile';
           <span class="link-detail"> (PDF)</span>
           <span aria-hidden="true"> ↗</span>
         </a>}
+        {work.explorer && <section class="work-companion" aria-label={work.explorer.title}>
+          <h4>{work.explorer.title}</h4>
+          <p>{work.explorer.description}</p>
+          <div class="companion-links">
+            <a class="document-link" href={work.explorer.demoUrl} target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+              Explore the demo<span aria-hidden="true"> ↗</span>
+            </a>
+            <a class="document-link" href={work.explorer.sourceUrl} target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+              View source<span aria-hidden="true"> ↗</span>
+            </a>
+          </div>
+        </section>}
       </div>
     </article>
   ))}
